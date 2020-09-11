@@ -17,6 +17,7 @@ const goods = [
       { us: 10, ru: 43 },
     ],
     tags: ["new", "running"],
+    quantity: 3,
   },
   {
     id: 2,
@@ -32,6 +33,7 @@ const goods = [
       { us: 10, ru: 43 },
     ],
     tags: ["new"],
+    quantity: 3,
   },
   {
     id: 3,
@@ -46,6 +48,7 @@ const goods = [
       { us: 9.5, ru: 42 },
     ],
     tags: ["new", "basketball"],
+    quantity: 3,
   },
   {
     id: 4,
@@ -61,6 +64,7 @@ const goods = [
       { us: 10, ru: 43 },
     ],
     tags: ["new"],
+    quantity: 3,
   },
   {
     id: 5,
@@ -76,6 +80,7 @@ const goods = [
       { us: 10, ru: 43 },
     ],
     tags: [],
+    quantity: 3,
   },
 ];
 
@@ -86,6 +91,12 @@ app.use(function (req, res, next) {
     "Origin, X-Requested-With, Content-Type, Accept"
   );
   next();
+});
+
+app.get("/api/products/:id", (req, res) => {
+  const productId = req.params.id;
+  const product = goods.find((elem) => elem.id == productId);
+  res.json(product);
 });
 
 app.get("/api/products", (req, res) => {
