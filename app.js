@@ -1,6 +1,17 @@
 const express = require("express");
+const dotenv = require("dotenv");
+const mongoose = require("mongoose");
+
+dotenv.config();
+
 const app = express();
 const port = 3001;
+
+mongoose
+  .connect(process.env.MONGODB_URL, {
+    useNewUrlParser: true,
+  })
+  .catch((error) => console.log(error.reason));
 
 const goods = [
   {
