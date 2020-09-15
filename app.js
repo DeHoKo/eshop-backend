@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+const userRoute = require("./routes/userRoute");
 
 dotenv.config();
 
@@ -10,8 +11,10 @@ const port = 3001;
 mongoose
   .connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
   })
-  .catch((error) => console.log(error.reason));
+  .catch((error) => console.log(error));
 
 const goods = [
   {
@@ -103,6 +106,8 @@ app.use(function (req, res, next) {
   );
   next();
 });
+
+app.use("/api/users", userRoute);
 
 app.get("/api/products/:id", (req, res) => {
   const productId = req.params.id;
