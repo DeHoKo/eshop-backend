@@ -4,6 +4,26 @@ const getToken = require("../util");
 
 const router = express.Router();
 
+router.post("/register", async (req, res) => {
+  const user = new User({
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
+  });
+  const newUser = await user.save();
+  if (newUser) {
+    res.send({
+      id: newUser.id,
+      name: newUser.name,
+      email: newUser.email,
+      isAdmin: newUser.isAdmin,
+      token: getToken(newUser),
+    });
+  } else {
+    res.status(401).send({ msg: "Something went wrong" });
+  }
+});
+
 router.post("/signin", async (req, res) => {
   const signinUser = await User.findOne({
     email: req.body.email,
