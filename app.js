@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const userRoute = require("./routes/userRoute");
+const bodyParser = require("body-parser");
 
 dotenv.config();
 
@@ -106,7 +107,7 @@ app.use(function (req, res, next) {
   );
   next();
 });
-
+app.use(bodyParser.json());
 app.use("/api/users", userRoute);
 
 app.get("/api/products/:id", (req, res) => {
