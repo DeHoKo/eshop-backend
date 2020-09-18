@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const userRoute = require("./routes/userRoute");
+const productRoute = require("./routes/productRoute");
 const bodyParser = require("body-parser");
 
 dotenv.config();
@@ -19,7 +20,7 @@ mongoose
 
 const goods = [
   {
-    id: 1,
+    _id: 1,
     category: "Sneakers",
     brand: "Nike",
     model: "AIR ZOOM PEGASUS 37",
@@ -35,7 +36,7 @@ const goods = [
     quantity: 3,
   },
   {
-    id: 2,
+    _id: 2,
     category: "Sneakers",
     brand: "Vans",
     model: "UA ULTRARANGE EXO SE",
@@ -51,7 +52,7 @@ const goods = [
     quantity: 3,
   },
   {
-    id: 3,
+    _id: 3,
     category: "Sneakers",
     brand: "Under Armour",
     model: "UA Lockdown 5",
@@ -66,7 +67,7 @@ const goods = [
     quantity: 3,
   },
   {
-    id: 4,
+    _id: 4,
     category: "Sneakers",
     brand: "adidas",
     model: "STRUTTER",
@@ -82,7 +83,7 @@ const goods = [
     quantity: 3,
   },
   {
-    id: 5,
+    _id: 5,
     category: "Sneakers",
     brand: "Nike",
     model: "ZOOM 2K MEN'S SHOE",
@@ -101,24 +102,25 @@ const goods = [
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
+  res.header("Access-Control-Allow-Credentials", "true");
+
+  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.header("Access-Control-Allow-Headers", "*");
+  // Access-Control-Allow-Headers Access-Control-Request-Method, Access-Control-Request-Headers
   next();
 });
 app.use(bodyParser.json());
 app.use("/api/users", userRoute);
+app.use("/api/products", productRoute);
+// app.get("/api/products/:id", (req, res) => {
+//   const productId = req.params.id;
+//   const product = goods.find((elem) => elem.id == productId);
+//   res.json(product);
+// });
 
-app.get("/api/products/:id", (req, res) => {
-  const productId = req.params.id;
-  const product = goods.find((elem) => elem.id == productId);
-  res.json(product);
-});
-
-app.get("/api/products", (req, res) => {
-  res.json(goods);
-});
+// app.get("/api/products", (req, res) => {
+//   res.json(goods);
+// });
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
