@@ -3,6 +3,12 @@ const Product = require("../models/productModel");
 
 const router = express.Router();
 
+router.get("/:id", async (req, res) => {
+  const productId = req.params.id;
+  const product = await Product.findById(productId);
+  res.send(product);
+});
+
 router.get("/", async (req, res) => {
   const products = await Product.find({});
   res.send(products);
