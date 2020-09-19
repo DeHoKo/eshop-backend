@@ -19,16 +19,17 @@ const isAuth = (req, res, next) => {
   const token = req.headers.authorization;
   if (token) {
     const onlyToken = token.slice(7, token.length);
-    jws.verify(onlyToken, process.env.JWT_SECRET, (err, decode) => {
+    jwt.verify(onlyToken, process.env.JWT_SECRET, (err, decode) => {
       if (err) {
         return res.status(401).send({ msg: "Invalid token" });
       }
-      req.user = token;
+      req.user = decode;
       next();
       return;
     });
+  } else {
+    return res.status(401).send({ msg: "Token doen't exist" });
   }
-  return res.status(401).send({ msg: "Token doen't exist" });
 };
 
 const isAdmin = (req, res, next) => {
