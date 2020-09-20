@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const userRoute = require("./routes/userRoute");
 const productRoute = require("./routes/productRoute");
+const orderRoute = require("./routes/orderRoute");
 const bodyParser = require("body-parser");
 
 dotenv.config();
@@ -30,6 +31,7 @@ app.use(function (req, res, next) {
   next();
 });
 app.use(bodyParser.json());
+app.use("/api/orders", orderRoute);
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
 
