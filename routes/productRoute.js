@@ -7,7 +7,11 @@ const router = express.Router();
 router.get("/:id", async (req, res) => {
   const productId = req.params.id;
   const product = await Product.findById(productId);
-  res.send(product);
+  if (product) {
+    res.send(product);
+  } else {
+    res.status(404).send({ message: "Product not found" });
+  }
 });
 
 router.get("/", async (req, res) => {
